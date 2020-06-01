@@ -1,0 +1,44 @@
+﻿@page
+@model SmartHome.Pages.UserRoles.ListModel
+@{
+    ViewData["Title"] = "Role Administration";
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="container">
+    @if (Model.IdentityRoles.Any())
+    {
+
+        @foreach (var item in Model.IdentityRoles)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    @item.Id
+                </div>
+                <div class="card-body">
+                    @item.Name
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-outline-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-outline-primary" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-outline-primary" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </div>
+         }
+
+    }
+    else
+    {
+        <div class="row">
+            <p>There aren`t any Roles.</p>
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-outline-secondary" asp-page="./CreateRole">Add New Role</a>
+        <a class="btn btn-outline-secondary" asp-page="~/Index">Back</a>
+    </div>
+</div>

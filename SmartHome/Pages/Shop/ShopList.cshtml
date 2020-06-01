@@ -1,0 +1,142 @@
+﻿@page
+@model SmartHome.Pages.Shop.ShopListModel
+@{
+    ViewData["Title"] = "Shopping List of products";
+}
+
+<h1>Shopping:</h1>
+
+<div class="container-fluid">
+    <div class="col-lg-9">
+        <form method="get">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder="search" asp-for="SearchItem">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fas fa-search">Search Products</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+   @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-info">@Model.Message</div>
+    }
+
+    <div>
+        <form method="post">
+            <div class="row form-group col-sm-6">
+                <input type="hidden" asp-for="Visit.Id" />
+                <label asp-for="Visit.UserId"></label>
+                <select class="form-control" asp-for="Visit.UserId" asp-items="@Model.Users">
+                    <option value="">Pick a User</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Visit.UserId"></span>
+            </div>
+
+            <div class="row text-center">
+                <h3>Our Products:</h3>
+                <div class="card-deck">
+                   @if (Model.Products.Any())
+                    {
+                       @foreach (var product in Model.Products)
+                        {
+                            var photopath = "~/images/" + (product.PhotoPath ?? "no-image.png");
+                            <div class="card m-3" style="min-width:18rem; max-width:30.5%;">
+                                <div class="card-header">
+                                    <a asp-page="/ShopItems/Details"><img class="card-img-top imageThumbnail" src="@photopath" asp-append-version="true" /></a>
+                                </div>
+
+                                <div class="card-body text-center">
+                                    <a asp-page="/ShopItems/Details">@product.Name</a>
+                                    <div class="panel-heading">
+                                        <p>@product.Price Euros</p>
+                                    </div>
+                                </div>
+
+                               @if (product.Availability == true)
+                                {
+                                    <div class="card-footer text-center">
+                                        <small class="text-muted">
+                                            <input class="btn btn-outline-success" type="submit" asp-for="@Model.Visit.ShopItems.Add(product)" value="Add to Cart">
+                                        </small>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>Not Avalible at the moment!!!</p>
+                                }
+                            </div>
+                            <br />
+                        }
+                    }
+                    else
+                    {
+                        <div class="card-footer alert-primary text-center">
+                            <p> Nothing to Display! </p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <h3>Our Services:</h3>
+                <div class="card-deck">
+                   @if (Model.Services.Any())
+                    {
+                       @foreach (var service in Model.Services)
+                        {
+                            var photopath = "~/images/" + (service.PhotoPath ?? "no-image.png");
+                            <div class="card m-3" style="min-width:18rem; max-width:30.5%;">
+                                <div class="card-header">
+                                    <a asp-page="/ShopItems/Details"><img class="card-img-top imageThumbnail" src="@photopath" asp-append-version="true" /></a>
+                                </div>
+
+                                <div class="card-body text-center">
+                                    <a asp-page="/ShopItems/Details">@service.Name</a>
+                                    <div class="panel-heading">
+                                        <p>@service.Price Euros</p>
+                                    </div>
+                                </div>
+
+                               @if (service.Availability == true)
+                                {
+                                    <div class="card-footer text-center">
+                                        <small class="text-muted">
+                                            <input class="btn btn-outline-success" type="submit" asp-for="@Model.Visit.ShopItems.Add(service)" value="Add to Cart">
+                                        </small>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>Not Avalible at the moment!!!</p>
+                                }
+                            </div>
+                            <br />
+                        }
+                    }
+                    else
+                    {
+                        <div class="card-footer alert-primary text-center">
+                            <p> Nothing to Display! </p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+
+   @for (int i = 0; i < Model.Visit.ShopItems.Count; i++)
+    {
+        <input type="number" asp-for="Visit.ShopItems[i]" />
+    }
+
+    <div class="form-group">
+        <a class="btn btn-primary" asp-route-id="@Model.Visit.Id" asp-page="./Buy">Buy</a>
+    </div>
+
+</div>

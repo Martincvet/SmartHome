@@ -1,0 +1,95 @@
+﻿@page "{id:min(1)?}/{handler?}"
+@model SmartHome.Pages.ShopItems.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    var photoPath = "~/images/" + (Model.ShopItem.PhotoPath ?? "no-image.png");
+    var pageheader = (Model.ShopItem.Id > 0) ? "Edit" : "Create";
+}
+
+<partial name="Notification" />
+
+<hr />
+
+<h1>@pageheader product:</h1>
+
+<br />
+<div class="row">
+    <div class="container-fluid">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="OnPost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ShopItem.Id" />
+            <input type="hidden" asp-for="ShopItem.PhotoPath" />
+
+            <div class="form-group">
+                <label asp-for="ShopItem.Name" class="control-label"></label>
+                <input asp-for="ShopItem.Name" class="form-control" />
+                <span asp-validation-for="ShopItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShopItem.ItemType" class="col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="ShopItem.ItemType" class="col-md-2 col-form-label" asp-items="@Model.ShopItemType">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ShopItem.Availability" class="col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="ShopItem.Availability" class="col-md-2 form-check">
+                    <span asp-validation-for="ShopItem.Availability" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShopItem.Price" class="control-label"></label>
+                <input asp-for="ShopItem.Price" class="form-control" />
+                <span asp-validation-for="ShopItem.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShopItem.Description" class="control-label"></label>
+                <input asp-for="ShopItem.Description" class="form-control text-body" />
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="Photo" class="col-form-label"></label>
+                    <div class="col-md-5">
+                        <div class="custom-file">
+                            <input asp-for="Photo" class="custom-file-input form-control" />
+                            <label class="custom-file-label">Click here to change Photo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col offset-5">
+                    <img class="img-thumbnail" src="@photoPath" asp-append-version="true" />
+                </div>
+            </div>
+            <div class="form-group col">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+            @section Script {
+                <script>
+                    $(document).ready(function () {
+                        $('.custom-file-input').on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).next('.custom-file-label').html(fileName);
+                        });
+                    });
+                </script>
+            }
+        </form>
+        <div class="form-group">
+            <a class="btn btn-primary" asp-page="./Index">Back to List</a>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-info">@Model.Message</div>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

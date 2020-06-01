@@ -1,0 +1,92 @@
+﻿@page
+@model SmartHome.Pages.Shop.BuyModel
+@{
+    ViewData["Title"] = "Buy Products or Services";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<h1>Buy: </h1>
+
+<div class="container">
+    <form method="post">
+        <div class="row form-group col-sm-6">
+            <input type="hidden" asp-for="Visit.Id" />
+            <label class="form-control" asp-for="Visit.User.UserName"></label>
+            <label class="form-control" asp-for="Visit.User.Membership.MemberhipTypeName"></label>
+        </div>
+        <div>
+            <div class="container-fluid">
+                @if (Model.Visit.ShopItems.Any())
+                {
+                    <div class="col">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name:
+                                    </th>
+                                    <th>
+                                        Price:
+                                    </th>
+                                    <th>
+                                        Item Type:
+                                    </th>
+                                    <th>
+                                        Price with Membership @Model.Visit.User.Membership.MemberhipTypeName:
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               @foreach (var shopitem in Model.Visit.ShopItems.OrderBy(x => x.ItemType))
+                                {
+                                    <tr>
+                                        <td>
+                                            @shopitem.Name
+                                        </td>
+                                        <td>
+                                            @shopitem.Price
+                                        </td>
+                                        <td>
+                                            @shopitem.ItemType
+                                        </td>
+                                        <td>
+                                            @Model.MembershipPrice(shopitem)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        Normal Price: @Model.Visit.ShopItems.Sum(x => x.Price).ToString("C")
+                                    </td>
+                                    <td>
+                                        Membership Price: @Model.TotalPerVisit(Model.Visit)
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-footer alert-primary text-center">
+                        <p> Nothing to Display! </p>
+                    </div>
+                }
+            </div>
+
+
+           @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert alert-info">@Model.Message</div>
+            }
+
+
+            <div>
+                <button type="submit" class="btn btn-primary">Buy</button>
+            </div>
+        </div>
+    </form>
+</div>

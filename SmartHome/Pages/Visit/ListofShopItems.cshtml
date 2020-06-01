@@ -1,0 +1,83 @@
+﻿@page
+@model SmartHome.Pages.Visit.ListofShopItemsModel
+@{
+    ViewData["Title"] = "List of Visits";
+    var number = 1;
+    var number2 = 1;
+}
+
+<h1>List of Visits:</h1>
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-success">@Model.Message</div>
+}
+
+<a  class="btn btn-success" asp-page="./Shopping">Shop Now</a>
+<form method="get">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by User`s Name" asp-for="Search">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Membership Type</th>
+                        <th scope="col">Pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var visit in Model.Visits)
+                    {
+                        <tr>
+                            <td>@number</td>
+                            <td>@visit.User.FirstName @visit.User.LastName</td>
+                            <td>@visit.User.Membership?.MemberhipTypeName</td>
+                            <td>@Model.TotalPerVisit(visit)</td>
+                        </tr>
+                        number++;
+                    }
+                </tbody>
+                <tfoot style="visibility:@(Model.Visits.Any()?"hidden":"visible")">
+                    <tr>
+                        <td class="alert alert-danger">There are no visits!</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-sm-6" style="visibility:@(Model.Visits.Any()?"visible":"hidden")">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Membership Type</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var visit in Model.Visits.GroupBy(x => x.User.Id))
+                    {
+                        <tr>
+                            <td>@number2</td>
+                            <td>@visit.First().User.FirstName @visit.First().User.LastName</td>
+                            <td>@visit.Sum(x => Model.TotalPerVisit(x))</td>
+                        </tr>
+                        number2++;
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Total Pay By User!</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</form>

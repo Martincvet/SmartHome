@@ -1,0 +1,125 @@
+﻿@page
+@model SmartHome.Pages.Users.Employees.EditModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var photoPath = "~/images/" + (Model.Employee.PhotoPath ?? "no-image.png");
+}
+
+@if (Model.Employee.Id != null)
+{
+    <h1>Edit Employee: @Model.Employee.FirstName @Model.Employee.LastName</h1>
+    <hr />
+}
+else
+{
+    <h1>Create Employee:</h1>
+    <hr />
+}
+
+
+<div class="container-fluid">
+    <form method="post">
+        <input type="hidden" asp-for="@Model.Employee.Id" />
+        <input type="hidden" asp-for="@Model.Employee.PhotoPath" />
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group offset-1">
+                    <img class="img-thumbnail img-fluid" src="@photoPath" asp-append-version="true" />
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label asp-for="@Model.Employee.UserName" class="control-label"></label>
+                    <input asp-for="@Model.Employee.UserName" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Employee.FirstName" class="control-label"></label>
+                    <input asp-for="@Model.Employee.FirstName" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Employee.LastName" class="control-label"></label>
+                    <input asp-for="@Model.Employee.LastName" class="form-control" />
+                    <span asp-validation-for="@Model.Employee.LastName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <h3>Additional Details:</h3>
+
+            <div class="form-group">
+                <label asp-for="@Model.Employee.BirthDate" class="control-label"></label>
+                <input asp-for="@Model.Employee.BirthDate" class="form-control" />
+                <span asp-validation-for="@Model.Employee.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Employee.HireDate" class="control-label"></label>
+                <input asp-for="@Model.Employee.HireDate" class="form-control" />
+                <span asp-validation-for="@Model.Employee.HireDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Employee.PhoneNumber" class="control-label"></label>
+                <input asp-for="@Model.Employee.PhoneNumber" class="form-control" />
+                <span asp-validation-for="@Model.Employee.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Employee.Email" class="control-label"></label>
+                <input asp-for="@Model.Employee.Email" class="form-control" />
+                <span asp-validation-for="@Model.Employee.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Employee.Role" class="control-label"></label>
+                <input asp-for="@Model.Employee.Role" class="form-control" />
+                <span asp-validation-for="@Model.Employee.Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Employee.Membership.MemberhipTypeName" class="control-label"></label>  @*vidi ova dali mora memberhsipid*@
+                <select asp-for="@Model.Employee.MembershipId" class="form-control" asp-items="@Model.Memberships">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="@Model.Employee.Membership.MemberhipTypeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="Photo" class="col-form-label"></label>
+                    <div class="col-md-5">
+                        <div class="custom-file">
+                            <input asp-for="Photo" class="custom-file-input form-control" />
+                            <label class="custom-file-label">Click here to change Photo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col offset-5">
+                    <img class="img-thumbnail" src="@photoPath" asp-append-version="true" />
+                </div>
+            </div>
+            <div class="form-group col">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+
+        @section Script {
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).next('.custom-file-label').html(fileName);
+                    });
+                });
+            </script>
+        }
+    </form>
+</div>
+
+<div class="row">
+    <a class="btn btn-outline-secondary" asp-page="./Delete" asp-route-id="@Model.Employee.Id">Delete</a>
+    <a class="btn btn-outline-secondary" asp-page="./ListEmployee">Back</a>
+</div>
+
+
+

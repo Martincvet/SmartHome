@@ -1,0 +1,23 @@
+﻿@using SmartHome.Pages.ShopItems
+@model SmartHome.Pages.ShopItems.EditModel
+
+
+<h4>Notification Preference</h4>
+
+
+<div class="container">
+    <form class="form-group" method="post" asp-page-handler="UpdateNotificationEmployees">
+        <div class="form-check">
+            <input asp-for="Notification" class="form-check-input" />
+            <label asp-for="Notification" class="form-check-label">Check Employees to receive notifications when details product change.</label>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Update Notificatons</button>
+
+       @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="alert alert-primary">
+                @Model.Message
+            </div>
+        }
+    </form>
+</div>

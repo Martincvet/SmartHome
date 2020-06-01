@@ -1,0 +1,97 @@
+﻿@page "users"
+@model SmartHome.Pages.Users.Administration.IndexModel
+@using Core.AppUser
+@{
+    ViewData["Title"] = "Users List";
+    var number = 1;
+}
+
+<h1>Users List:</h1>
+<hr />
+
+<div class="container-fluid">
+    @if (Model.App_Users.Any())
+    {
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Number:
+                        </th>
+                        <th>
+                            UserName:
+                        </th>
+                        <th>
+                            BirthDate:
+                        </th>
+                        <th>
+                            Email:
+                        </th>
+                        <th>
+                            City:
+                        </th>
+                        <th>
+                            Membership:
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach (var user in Model.App_Users.OrderBy(x=>x.Membership))
+                    {
+                        <tr>
+                            <td>
+                                @number
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@user.Id">
+                                    @user.UserName
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@user.Id">
+                                    @user.BirthDate
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@user.Id">
+                                    @user.Email
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@user.Id">
+                                    @user.City
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@user.Id">
+                                    @user.Membership?.MemberhipTypeName
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@user.Id">Edit</a>
+                                <a asp-page="./Delete" asp-route-id="@user.Id">Delete</a>
+                                <a asp-page="/UserRoles/List" asp-route-id="@user.Id">Add Role</a>
+                            </td>
+                        </tr>
+                       number++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert text-center">
+            <h4>There are no users!</h4>
+        </div>
+    }
+</div>
+
+<div class="row">
+    <div class="col">
+        <a class="btn btn-outline-secondary" asp-page="~/Register">Add New User</a>
+        <a class="btn btn-outline-secondary" asp-page="/Index">Back</a>
+    </div>
+</div>

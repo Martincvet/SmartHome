@@ -1,0 +1,28 @@
+﻿@page
+@model SmartHome.Pages.UserRoles.EditRoleModel
+@{
+    ViewBag["Title"] = "Edit Role";
+}
+
+
+<h2>Edit @Model.App_Role.Name Role</h2>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="App_Role.Name"></label>
+                <input class="form-control" asp-for="App_Role.Name" />
+                <span asp-validation-for="App_Role.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="App_Role.Description"></label>
+                <input class="form-control" asp-for="App_Role.Description" />
+                <span asp-validation-for="App_Role.Description" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Edit</button>
+            <a class="btn btn-primary" asp-page="Index">Back</a>
+        </form>
+    </div>
+</div>

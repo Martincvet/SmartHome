@@ -1,0 +1,69 @@
+﻿@page "details"
+@model SmartHome.Pages.Users.Administration.DetailsModel
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details:</h1>
+
+<div>
+    <h4>
+        @Html.DisplayFor(model => model.App_User.UserName)
+    </h4>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.App_User.FirstName)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.App_User.FirstName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.App_User.LastName)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.App_User.LastName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.App_User.BirthDate)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.App_User.BirthDate)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.App_User.Email)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.App_User.Email)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.App_User.City)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.App_User.City)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @Html.DisplayNameFor(model => model.App_User.Membership.MemberhipTypeName)
+            </div>
+            <div class="col">
+                @Html.DisplayFor(model => model.App_User.Membership.MemberhipTypeName)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="justify-content-start">
+    <a class="btn btn-secondary" asp-page="./Edit">Edit</a> 
+    <a class="btn btn-secondary" asp-page="./Index">Back to List</a>
+</div>

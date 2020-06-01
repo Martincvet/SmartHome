@@ -1,0 +1,59 @@
+﻿@page "/details/{id:min(1)?}"
+@model SmartHome.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    var photoPath = "~/images/" + (Model.ShopItem.PhotoPath ?? "no-image.png");
+}
+
+<h1>Details Filed:</h1>
+<h4>Shop Product Details:</h4>
+
+<div class="row">
+    <hr />
+    <div class="col-sm-6">
+        <div class="col">
+            Photo:
+        </div>
+        <div class="form-group offset-1">
+            <img class="img-thumbnail img-fluid" src="@photoPath" asp-append-version="true" />
+        </div>
+    </div>
+    <dl class="col-sm-6">
+        <dt class="col">
+            Name:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ShopItem.Name)
+        </dd>
+        <dt class="col">
+            You are shopping what:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ShopItem.ItemType)
+        </dd>
+        <dt class="col-sm-3">
+            Avalible int the Market:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ShopItem.Availability)
+        </dd>
+        <dt class="col-sm-3">
+            Price:
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ShopItem.Price) Euros
+        </dd>
+        <dt class="col-sm-3 ">
+            Description:
+        </dt>
+        <dd class="col-sm-9 text-body">
+            @Html.DisplayFor(model => model.ShopItem.Description)
+        </dd>
+    </dl>
+</div>
+<div class="row">
+    <a class="btn btn-outline-secondary" asp-page="./Edit" asp-route-id="@Model.ShopItem.Id">Edit</a> 
+    <a class="btn btn-outline-secondary" asp-page="./Index">Back</a> 
+    <a class="btn btn-outline-secondary" asp-page="./Delete" asp-route-id="@Model.ShopItem.Id">Delete</a>
+</div>

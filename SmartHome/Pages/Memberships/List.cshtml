@@ -1,0 +1,62 @@
+﻿@page
+@model SmartHome.Memberships.ListModel
+
+@{
+    ViewData["Title"] = "Membership List";
+}
+
+    <h1>@ViewData["Title"]:</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name:
+            </th>
+            <th>
+                Discount Prouduct:
+            </th>
+            <th>
+                Discount Service:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Memberships.Any()) 
+        {
+
+@foreach (var membership in Model.Memberships) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => membership.MemberhipTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => membership.Discount_Product.ToString("P"))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => membership.Discount_Service.ToString("P"))
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@membership.Id">Edit</a> 
+                <a asp-page="./Details" asp-route-id="@membership.Id">Details</a> 
+                <a asp-page="./Delete" asp-route-id="@membership.Id">Delete</a>
+            </td>
+        </tr>
+}
+        }
+        else
+        {
+            <tr>
+                <td class="text-center">
+                    There are no Memberships!!!
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br>
+<p>
+    <a class="btn btn-outline-primary" asp-page="Create">Create New</a>
+</p>

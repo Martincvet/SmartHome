@@ -1,0 +1,21 @@
+﻿@page
+@model SmartHome.Pages.Users.Employees.DeleteEmployeeModel
+@{
+    ViewData["Title"] = "Delete Employee";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Delete Employee: @Model.Employee.FirstName @Model.Employee.LastName</h1>
+<hr />
+<div class="container">
+    <div class="alert alert-dark">
+        Are you sure you want to delete employee with role @Model.Employee.Role?
+    </div>
+    <form method="post">
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">Yes!</button>
+            <a asp-page="./Index" class="btn btn-outline-dark">Cancel</a>
+        </div>
+    </form>
+</div>
+

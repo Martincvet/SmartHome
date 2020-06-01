@@ -1,0 +1,26 @@
+﻿@page
+@model SmartHome.Pages.UserRoles.CreateRoleModel
+@{
+    ViewBag.Title = "Create Role";
+}
+
+<h2>Create New Role:</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="IdentityRole.Name"></label>
+                <input class="form-control" asp-for="IdentityRole.Name" />
+                <span asp-validation-for="IdentityRole.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdentityRole.Description"></label>
+                <input class="form-control" asp-for="IdentityRole.Description" />
+                <span asp-validation-for="IdentityRole.Description" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Create Role</button>
+            <a class="btn btn-primary" asp-page="./List">Back</a>
+        </form>
+    </div>
+</div>
